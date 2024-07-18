@@ -1,4 +1,4 @@
-import { GET_EVENTS, EVENTS_ERROR, GET_EVENT } from '../actions/types';
+import { GET_EVENTS, EVENTS_ERROR, GET_EVENT, CREATE_EVENT, UPDATE_EVENT } from '../actions/types';
 
 const initialState = {
   events: [],
@@ -21,6 +21,18 @@ function eventReducer(state = initialState, action) {
       return {
         ...state,
         event: payload,
+        loading: false,
+      };
+    case CREATE_EVENT:
+      return {
+        ...state,
+        events: [payload, ...state.events],
+        loading: false,
+      };
+    case UPDATE_EVENT:
+      return {
+        ...state,
+        events: state.events.map(event => (event._id === payload._id ? payload : event)),
         loading: false,
       };
     case EVENTS_ERROR:

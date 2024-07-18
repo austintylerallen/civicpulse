@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    password: ''
   });
-
-  const dispatch = useDispatch();
 
   const { email, password } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    dispatch(login(email, password));
+    login(email, password);
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={e => onSubmit(e)}>
       <div>
-        <label>Email</label>
-        <input type="email" name="email" value={email} onChange={onChange} required />
+        <input
+          type="email"
+          placeholder="Email Address"
+          name="email"
+          value={email}
+          onChange={e => onChange(e)}
+        />
       </div>
       <div>
-        <label>Password</label>
-        <input type="password" name="password" value={password} onChange={onChange} required />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={password}
+          onChange={e => onChange(e)}
+        />
       </div>
-      <button type="submit">Login</button>
+      <input type="submit" value="Login" />
     </form>
   );
 };
 
-export default Login;
+export default connect(null, { login })(Login);

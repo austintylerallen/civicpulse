@@ -2,12 +2,27 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     ports:
-      - '5001:5000'  # Change this line
-    environment:
-      - MONGODB_URI=mongodb+srv://user-123:Papa7758$$@clusterreps.w6x6iki.mongodb.net/?retryWrites=true&w=majority&appName=ClusterReps
+      - "5001:5000"
+    env_file:
+      - .env
+    networks:
+      - civicpulse-net
+
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     ports:
-      - '3000:3000'
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://192.168.96.2:5000/api:5000/api
+    depends_on:
+      - backend
+    networks:
+      - civicpulse-net
+
+networks:
+  civicpulse-net:
+    driver: bridge

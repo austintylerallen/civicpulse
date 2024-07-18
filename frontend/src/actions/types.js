@@ -11,10 +11,16 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_EVENTS = 'GET_EVENTS';
 export const EVENTS_ERROR = 'EVENTS_ERROR';
 export const GET_EVENT = 'GET_EVENT';
+export const CREATE_EVENT = 'CREATE_EVENT';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
 
 // Feedback types
 export const GET_FEEDBACKS = 'GET_FEEDBACKS';
-export const GET_FEEDBACK = 'GET_FEEDBACK'; // Add this line
+export const GET_FEEDBACK = 'GET_FEEDBACK';
 export const FEEDBACK_ERROR = 'FEEDBACK_ERROR';
 export const ADD_FEEDBACK = 'ADD_FEEDBACK';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
+
+// Profile types
+export const GET_PROFILE = 'GET_PROFILE';
+export const PROFILE_ERROR = 'PROFILE_ERROR';

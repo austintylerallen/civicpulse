@@ -1,51 +1,70 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
 
-const Register = () => {
+const Register = ({ register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    password2: '',
+    password2: ''
   });
-
-  const dispatch = useDispatch();
 
   const { name, email, password, password2 } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
       console.log('Passwords do not match');
     } else {
-      dispatch(register({ name, email, password }));
+      register({ name, email, password });
     }
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={e => onSubmit(e)}>
       <div>
-        <label>Name</label>
-        <input type="text" name="name" value={name} onChange={onChange} required />
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={e => onChange(e)}
+        />
       </div>
       <div>
-        <label>Email</label>
-        <input type="email" name="email" value={email} onChange={onChange} required />
+        <input
+          type="email"
+          placeholder="Email Address"
+          name="email"
+          value={email}
+          onChange={e => onChange(e)}
+        />
       </div>
       <div>
-        <label>Password</label>
-        <input type="password" name="password" value={password} onChange={onChange} required />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={password}
+          onChange={e => onChange(e)}
+        />
       </div>
       <div>
-        <label>Confirm Password</label>
-        <input type="password" name="password2" value={password2} onChange={onChange} required />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="password2"
+          value={password2}
+          onChange={e => onChange(e)}
+        />
       </div>
-      <button type="submit">Register</button>
+      <input type="submit" value="Register" />
     </form>
   );
 };
 
-export default Register;
+export default connect(null, { register })(Register);

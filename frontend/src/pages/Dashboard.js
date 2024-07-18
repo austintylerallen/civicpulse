@@ -1,27 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getEvents } from '../actions/eventActions';
+import React from 'react';
+import { connect } from 'react-redux';
 
-const Dashboard = () => {
-  const dispatch = useDispatch();
-  const events = useSelector(state => state.events.events);
-
-  useEffect(() => {
-    dispatch(getEvents());
-  }, [dispatch]);
-
+const Dashboard = ({ auth: { user } }) => {
   return (
     <div>
-      <h1>Dashboard</h1>
-      {events.map(event => (
-        <div key={event._id}>
-          <h2>{event.title}</h2>
-          <p>{event.description}</p>
-          <p>{new Date(event.date).toLocaleDateString()}</p>
-        </div>
-      ))}
+      <h1>Welcome, {user && user.name}</h1>
     </div>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Dashboard);
